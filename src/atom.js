@@ -9,3 +9,8 @@ export const toggleMediaState = atom({
   key: "toggleMediaBtn",
   default: false,
 });
+
+export const toggleEmoticonState = atom({
+  key: "toggleEmoticonBtn",
+  default: false,
+});

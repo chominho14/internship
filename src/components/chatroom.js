@@ -3,10 +3,12 @@ import styled from "styled-components";
 import { GrFormClose } from "react-icons/gr";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
+import { RiEmotionHappyLine, RiEmotionHappyFill } from "react-icons/ri";
 import React, { useRef } from "react";
 import { useRecoilState } from "recoil";
-import { messageState, toggleMediaState } from "../atom";
-import Media from "./mediaclick";
+import { messageState, toggleEmoticonState, toggleMediaState } from "../atom";
+import Media from "./media";
+import Emoticon from "./emoticon";
 
 const ChatroomContainer = styled.div`
   position: fixed;
@@ -111,6 +113,8 @@ const ContentForm = styled.form`
   justify-content: center;
 `;
 
+// ------ 하단 바 미디어 버튼 --------
+
 const ContentFormPopBtn = styled.span`
   width: 33px;
   height: 33px;
@@ -121,20 +125,26 @@ const ContentFormPopBtn = styled.span`
   text-align: center;
   margin-top: 2px;
   cursor: pointer;
+  color: gray;
 `;
 
+// ------ 하단 바 입력  --------
+
 const ContentFormInput = styled.input`
-  width: 60%;
+  width: 50%;
   height: 70%;
   border-radius: 0.7rem;
   border: 1px solid gray;
-  margin-right: 10px;
   padding-left: 10px;
-  padding-right: 10px;
+  padding-right: 34px;
 `;
+
+// ------ 하단 바 메시지 정송 버튼 --------
 
 const ContentFormMsgBtnDiv = styled.div`
   width: 10%;
+  height: 60px;
+  margin-left: 5px;
 `;
 
 const ContentFormMsgBtnBtn = styled.button`
@@ -148,11 +158,28 @@ const ContentFormMsgBtnBtn = styled.button`
   }
 `;
 
+// ------ 하단 바 이모티콘 --------
+
+const ContentFormEmoji = styled.div`
+  position: absolute;
+  width: 7%;
+  height: 30px;
+  border-radius: 10px;
+  display: flex;
+  font-size: 35px;
+  right: 73px;
+  margin-top: 2px;
+  cursor: pointer;
+  padding-right: 5px;
+`;
+
 // ========= Main 실행 함수 =========
 const Chatroom = () => {
   const boxRef = useRef(null);
   const [messages, setMessages] = useRecoilState(messageState);
   const [toggleMedia, setToggleMedia] = useRecoilState(toggleMediaState);
+  const [toggleEmoticon, setToggleEmoticon] =
+    useRecoilState(toggleEmoticonState);
   const { register, handleSubmit, setValue, reset } = useForm();
 
   // ----- 하단 바 Form onValid -----
@@ -181,8 +208,13 @@ const Chatroom = () => {
   };
 
   const toggleMediaBtn = () => {
-    // 미디어토글 버튼 클릭시 반응
+    // 미디어토글 버튼 클릭 시 반응
     setToggleMedia((prev) => !prev);
+  };
+
+  const toggleEmoticonBtn = () => {
+    // 이모티콘 버튼 클릭 시 반응
+    setToggleEmoticon((prev) => !prev);
   };
 
   const messageDeleteClick = () => {
@@ -192,12 +224,14 @@ const Chatroom = () => {
   };
   return (
     <ChatroomContainer>
+      {/* { ---- 상단 바 ----} */}
       <ChatroomTitleBar>
         <ChatroomTitle>상담 요청</ChatroomTitle>
         <ChatroomTitleBarDeleteBtn onClick={messageDeleteClick}>
           <GrFormClose />
         </ChatroomTitleBarDeleteBtn>
       </ChatroomTitleBar>
+      {/* { ---- 메시지  ----} */}
       <MessageContainer>
         <div>
           <div>상담원1</div>
@@ -206,6 +240,7 @@ const Chatroom = () => {
             <MessageContentTime>08.30 PM</MessageContentTime>
           </MessageContentContainer>
         </div>
+        {/* { ---- 나의 메시지 ----} */}
         <MessageContentMyContainer ref={boxRef}>
           {messages.map((message) => (
             <MessageContentMyMessage key={message.id}>
@@ -214,21 +249,26 @@ const Chatroom = () => {
             </MessageContentMyMessage>
           ))}
         </MessageContentMyContainer>
+        {/* { ---- 미디어 토글 버튼 클릭 시 ----} */}
         {toggleMedia ? <Media /> : null}
+        {toggleEmoticon ? <Emoticon /> : null}
       </MessageContainer>
+
+      {/* { ---- 하단 바 ----} */}
       <ContentContainer>
         <ContentForm onSubmit={handleSubmit(onValid)}>
           <ContentFormPopBtn onClick={toggleMediaBtn}>
-            {/* <AiOutlinePlus /> */}
             {toggleMedia ? <MdClose /> : <AiOutlinePlus />}
           </ContentFormPopBtn>
-
           <ContentFormInput
             placeholder="Message"
             type="text"
             required
             {...register("message", { required: "메시지를 입력해주세요." })}
           />
+          <ContentFormEmoji onClick={toggleEmoticonBtn}>
+            {toggleEmoticon ? <RiEmotionHappyFill /> : <RiEmotionHappyLine />}
+          </ContentFormEmoji>
           <ContentFormMsgBtnDiv>
             <ContentFormMsgBtnBtn>Send</ContentFormMsgBtnBtn>
           </ContentFormMsgBtnDiv>
