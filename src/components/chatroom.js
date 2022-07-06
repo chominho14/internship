@@ -200,11 +200,18 @@ const Chatroom = () => {
     setValue("message", "");
 
     // 새로운 메시지 전송 시 스크롤 맨 아래 고정
-    boxRef.current.scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-      inline: "nearest",
-    });
+    // boxRef.current.scrollIntoView({
+    //   behavior: "smooth",
+    //   block: "end",
+    //   inline: "nearest",
+    // });
+    setTimeout(() => {
+      boxRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+    }, 10);
     console.log(boxRef.current);
   };
 
