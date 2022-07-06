@@ -94,6 +94,7 @@ const Grid = styled.div`
 const EmoticonDesign = styled.div`
   height: 40px;
   width: 40px;
+  cursor: pointer;
 `;
 
 const Emoticon = () => {

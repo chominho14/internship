@@ -29,6 +29,7 @@ const ChatroomTitleBar = styled.div`
   font-size: 20px;
   font-weight: bold;
   background-color: #f5f5f6;
+  align-items: center;
   height: 5%;
 `;
 
@@ -46,7 +47,7 @@ const ChatroomTitleBarDeleteBtn = styled.span`
 
 const MessageContainer = styled.div`
   height: 85%;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 10px;
 `;
 
@@ -99,7 +100,7 @@ const MessageContentMyTime = styled.div`
 // --- 하단 바 ---
 
 const ContentContainer = styled.div`
-  height: 8%;
+  height: 50px;
   width: 100%;
   display: flex;
   background-color: #f5f5f6;
@@ -207,13 +208,13 @@ const Chatroom = () => {
     console.log(boxRef.current);
   };
 
+  // 미디어토글 버튼 클릭 시 반응
   const toggleMediaBtn = () => {
-    // 미디어토글 버튼 클릭 시 반응
     setToggleMedia((prev) => !prev);
   };
 
+  // 이모티콘 버튼 클릭 시 반응
   const toggleEmoticonBtn = () => {
-    // 이모티콘 버튼 클릭 시 반응
     setToggleEmoticon((prev) => !prev);
   };
 
