@@ -184,6 +184,8 @@ const Chatroom = () => {
   const { register, handleSubmit, setValue, reset } = useForm();
 
   // ----- 하단 바 Form onValid -----
+
+  // Send 버튼이 클릭 됐을 시
   const onValid = ({ message }) => {
     // 시간 설정
     const time = new Date();
@@ -199,12 +201,6 @@ const Chatroom = () => {
     ]);
     setValue("message", "");
 
-    // 새로운 메시지 전송 시 스크롤 맨 아래 고정
-    // boxRef.current.scrollIntoView({
-    //   behavior: "smooth",
-    //   block: "end",
-    //   inline: "nearest",
-    // });
     setTimeout(() => {
       boxRef.current.scrollIntoView({
         behavior: "smooth",
@@ -245,7 +241,7 @@ const Chatroom = () => {
           <div>상담원1</div>
           <MessageContentContainer>
             <MessageContent>안녕하세요? 고객님</MessageContent>
-            <MessageContentTime>08.30 PM</MessageContentTime>
+            <MessageContentTime>08:30 AM</MessageContentTime>
           </MessageContentContainer>
         </div>
         {/* { ---- 나의 메시지 ----} */}
