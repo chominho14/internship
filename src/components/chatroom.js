@@ -266,6 +266,7 @@ const Chatroom = () => {
           </ContentFormPopBtn>
           <ContentFormInput
             placeholder="Message"
+            autoComplete="off"
             type="text"
             required
             {...register("message", { required: "메시지를 입력해주세요." })}
